@@ -1,15 +1,19 @@
 import React from 'react'
 
 class RoomList extends React.Component {
-    render () {
+    render() {
         return (
             <div className="rooms-list">
                 <ul>
-                <h3>Your rooms:</h3>
+                    <h3>Your rooms:</h3>
                     {this.props.rooms.map(room => {
                         return (
                             <li key={room.id} className="room">
-                                <a href="#"># {room.name}</a>
+                                <a
+                                    onClick={() => this.props.subscribeToRoom(room.id)}
+                                    href="#">
+                                    # {room.name}
+                                </a>
                             </li>
                         )
                     })}

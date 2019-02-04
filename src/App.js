@@ -13,7 +13,7 @@ class App extends Component {
     state = {
         messages: []
     }
-    
+
     componentDidMount() {
         const chatManager = new Chatkit.ChatManager({
             instanceLocator,
@@ -22,28 +22,36 @@ class App extends Component {
                 url: tokenUrl
             })
         })
-        
+
         chatManager.connect()
-        .then(currentUser => {
-            currentUser.subscribeToRoom({
-                roomId: 19729431,
-                hooks: {
-                    onNewMessage: message => {
-                        this.setState({
-                            messages: [...this.state.messages, message]
-                        })
+            .then(currentUser => {
+                this.currentUser = currentUser;
+                currentUser.subscribeToRoom({
+                    roomId: 19729431,
+                    hooks: {
+                        onNewMessage: message => {
+                            this.setState({
+                                messages: [...this.state.messages, message]
+                            })
+                        }
                     }
-                }
+                })
             })
+    }
+
+    sendMessage = text => {
+        this.currentUser.sendMessage({
+            text,
+            roomId: 19729431
         })
     }
-    
+
     render() {
         return (
             <div className="app">
                 <RoomList />
                 <MessageList messages={this.state.messages} />
-                <SendMessageForm />
+                <SendMessageForm sendMessage={this.sendMessage} />
                 <NewRoomForm />
             </div>
         );

@@ -32,4 +32,4 @@ class SendMessageForm extends Component {
     }
 }
 
-export default SendMessageForm
+export default SendMessageForm;

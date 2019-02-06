@@ -70,12 +70,12 @@ class App extends Component {
     sendMessage = text => {
         this.currentUser.sendMessage({
             text,
-            roomId: 19729431
+            roomId: this.state.roomId
         })
     }
 
     createRoom = name => {
-        this.currentUser.createRoom({
+         this.currentUser.createRoom({
             name
         })
         .then(room => this.subscribeToRoom(room.id))
@@ -95,7 +95,7 @@ class App extends Component {
                 <SendMessageForm 
                     disabled={!this.state.roomId}
                     sendMessage={this.sendMessage} />
-                <NewRoomForm />
+                <NewRoomForm createRoom={this.createRoom} />
             </div>
         );
     }

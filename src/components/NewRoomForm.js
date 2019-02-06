@@ -7,18 +7,16 @@ class NewRoomForm extends React.Component {
         this.state = {
             roomName: ''
         }
-        this.handleChange = this.handleChange.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
     }
     
-    handleChange(e) {
+    handleChange = event => {
         this.setState({
-            roomName: e.target.value
+            roomName: event.target.value
         })
     }
     
-    handleSubmit(e) {
-        e.preventDefault()
+    handleSubmit = event => {
+        event.preventDefault()
         this.props.createRoom(this.state.roomName);
         this.setState({roomName: ''});
     }

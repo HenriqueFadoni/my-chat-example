@@ -74,6 +74,14 @@ class App extends Component {
         })
     }
 
+    createRoom = name => {
+        this.currentUser.createRoom({
+            name
+        })
+        .then(room => this.subscribeToRoom(room.id))
+        .catch(err => console.log('error with createRoom: ', err))
+    }
+
     render() {
         return (
             <div className="app">
@@ -81,8 +89,12 @@ class App extends Component {
                     roomId={this.state.roomId}
                     subscribeToRoom={this.subscribeToRoom}
                     rooms={[...this.state.joinableRooms, ...this.state.joinedRooms]} />
-                <MessageList messages={this.state.messages} />
-                <SendMessageForm sendMessage={this.sendMessage} />
+                <MessageList
+                    roomId={this.state.roomId} 
+                    messages={this.state.messages} />
+                <SendMessageForm 
+                    disabled={!this.state.roomId}
+                    sendMessage={this.sendMessage} />
                 <NewRoomForm />
             </div>
         );
